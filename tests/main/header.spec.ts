@@ -4,7 +4,7 @@ test.beforeEach(async ({ page }) => {
   const adModal = page.getByTestId('interstitial-ad-modal');
   const closeButton = page.getByTestId('interstitial-ad-close-button');
 
-  await page.goto('https://www.remax.com/');
+  await page.goto(process.env.BASE_URL!);
   if (await adModal.isVisible()) {
     await closeButton.click();
     await expect(adModal).not.toBeVisible();
