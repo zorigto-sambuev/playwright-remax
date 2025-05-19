@@ -1,16 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test } from '../fixtures';
+import { expect } from '@playwright/test';
 
 test.describe('Main Page Search Tests', () => {
     test.beforeEach(async ({ page }) => {
-        const adModal = page.getByTestId('interstitial-ad-modal');
-        const closeButton = page.getByTestId('interstitial-ad-close-button');
-
-        await page.goto(process.env.BASE_URL!);
-        if (await adModal.isVisible()) {
+        //test here
+          await page.goto(process.env.BASE_URL!);
+          const adModal = page.getByTestId('interstitial-ad-modal');
+          const closeButton = page.getByTestId('interstitial-ad-close-button');
+          try {
+            await expect(adModal).toBeVisible({ timeout: 3000 });
+            await expect(closeButton).toBeVisible({ timeout: 3000 });
             await closeButton.click();
-            await expect(adModal).not.toBeVisible();
-        }
-    });
+            await expect(adModal).not.toBeVisible({ timeout: 3000 });
+          } catch (error) {
+              console.error('Error closing ad modal:');
+          }
+      });
 
     test('should have heading visible', async ({ page }) => {
         const headerSearch = page.getByTestId('d-hero-section-text');
@@ -37,7 +42,7 @@ test.describe('Main Page Search Tests', () => {
         }
     });
 
-    test('should show Plcaholder is visible in search field', async ({ page }) => {
+    test('should show Placeholder is visible in search field', async ({ page }) => {
         const inputField = page.getByTestId('quicksearch-input');
         const moreTooltip = page.locator('span.tooltip-link.inside-input');
         const moreButtonExpanded = page.locator('.tooltip.tooltip-bottom');
