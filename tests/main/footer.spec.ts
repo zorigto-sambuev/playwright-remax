@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test } from '../fixtures';
+import { expect } from '@playwright/test';
 
 test.describe('Main Page Footer Tests', () => {
     test.beforeEach(async ({ page }) => {
@@ -7,10 +8,10 @@ test.describe('Main Page Footer Tests', () => {
         const adModal = page.getByTestId('interstitial-ad-modal');
         const closeButton = page.getByTestId('interstitial-ad-close-button');
         try {
-          await adModal.waitFor({ state: 'visible', timeout: 3000 });
-          await closeButton.waitFor({ state: 'visible', timeout: 3000 });
+          await expect(adModal).toBeVisible({ timeout: 3000 });
+          await expect(closeButton).toBeVisible({ timeout: 3000 });
           await closeButton.click();
-          await expect(adModal).not.toBeVisible();
+          await expect(adModal).not.toBeVisible({ timeout: 3000 });
         } catch (error) {
             console.error('Error closing ad modal:');
         }
@@ -33,8 +34,9 @@ test.describe('Main Page Footer Tests', () => {
     await expect(page.getByRole('heading', { name: 'Featured Videos' })).toBeVisible();
   });
 
-  test('should display 1st column footer links and validate navigation', async ({ page, context }) => {
-    const footer = page.getByRole('contentinfo');
+  //applied authenticatedPage here
+  test('should display 1st column footer links and validate navigation', async ({ authenticatedPage, context }) => {
+    const footer = authenticatedPage.getByRole('contentinfo');
     const expectedLinks = [
       { text: 'Worldwide Property Search', url: 'https://global.remax.com/default.aspx' },
       { text: 'RE/MAX Canada', url: 'https://www.remax.ca/' },
@@ -90,7 +92,6 @@ test.describe('Main Page Footer Tests', () => {
   test('should display 3rd column footer links and validate navigation', async ({ page, context }) => {
     const footer = page.getByRole('contentinfo');
     
-    // Define all expected footer links with their URLs
     const expectedLinks = [
       { text: 'RE/MAX Holdings', url: 'https://www.remaxholdings.com/' },
       { text: 'Invest in a RE/MAX Franchise', url: 'https://franchise.remax.com/' },
