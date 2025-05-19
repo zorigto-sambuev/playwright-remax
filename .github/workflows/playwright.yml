@@ -8,6 +8,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ secrets.BASE_URL }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -17,10 +19,6 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Create env file
-      run: |
-        touch .env
-        echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
     - name: Run Playwright tests
       run: npx playwright test --workers=4
     - uses: actions/upload-artifact@v4
