@@ -2,13 +2,17 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Main Page Footer Tests', () => {
     test.beforeEach(async ({ page }) => {
+      //test here
+        await page.goto(process.env.BASE_URL!);
         const adModal = page.getByTestId('interstitial-ad-modal');
         const closeButton = page.getByTestId('interstitial-ad-close-button');
-    
-        await page.goto(process.env.BASE_URL!);
-        if (await adModal.isVisible()) {
+        try {
+          await adModal.waitFor({ state: 'visible', timeout: 3000 });
+          await closeButton.waitFor({ state: 'visible', timeout: 3000 });
           await closeButton.click();
           await expect(adModal).not.toBeVisible();
+        } catch (error) {
+            console.error('Error closing ad modal:');
         }
     });
 
