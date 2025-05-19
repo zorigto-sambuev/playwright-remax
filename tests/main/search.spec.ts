@@ -43,11 +43,15 @@ test.describe('Main Page Search Tests', () => {
 
     test('should show Placeholder is visible in search field', async ({ page }) => {
         const inputField = page.getByTestId('quicksearch-input');
-        const moreTooltip = page.locator('span.tooltip-link.inside-input');
-        const moreButtonExpanded = page.locator('.tooltip.tooltip-bottom');
 
         await expect(inputField).toBeVisible();
         await expect(inputField).toHaveAttribute('placeholder', 'Address, City, ZIP, and More');
+    });
+
+    test('should show Placeholder is displayed additional search fields', async ({ page }) => {
+        const moreTooltip = page.locator('span.tooltip-link.inside-input');
+        const moreButtonExpanded = page.locator('.tooltip.tooltip-bottom');
+
         await expect(moreTooltip).toBeVisible();
         await expect(moreTooltip).toHaveText('More');
         await moreTooltip.click();
