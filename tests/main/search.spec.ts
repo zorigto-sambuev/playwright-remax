@@ -3,7 +3,6 @@ import { expect } from '@playwright/test';
 
 test.describe('Main Page Search Tests', () => {
     test.beforeEach(async ({ page }) => {
-        //test here
           await page.goto(process.env.BASE_URL!);
           const adModal = page.getByTestId('interstitial-ad-modal');
           const closeButton = page.getByTestId('interstitial-ad-close-button');
