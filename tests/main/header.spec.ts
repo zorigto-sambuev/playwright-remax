@@ -22,7 +22,7 @@ test.describe('Main Page Header Tests', () => {
     await expect(logo).toHaveAttribute('height', '60');
   }); 
 
-  test.only('should navigate to homes for sale page from Buy Property Search dropdown', async ({ page }) => {
+  test('should navigate to homes for sale page from Buy Property Search dropdown', async ({ page }) => {
     const buyButton = page.getByTestId('site-nav-button-Buy-text');
     const propertySearchLink = page.getByTestId('site-nav-link-Property Search');
     const pageTitle = page.locator('h1.title');
