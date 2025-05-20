@@ -18,6 +18,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    permissions: [],
     viewport: { width: 1920, height: 1080 },
     actionTimeout: 10000, 
     navigationTimeout: 15000, 
