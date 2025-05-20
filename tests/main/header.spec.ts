@@ -52,7 +52,6 @@ test.describe('Main Page Header Tests', () => {
     await buyingGuideLink.click();
     await expect(page).toHaveURL('https://www.remax.com/buy/buyers-guide');
     await expect(pageTitle).toBeVisible();
-    // await expect(pageTitle).toHaveText('Welcome to the REMAX Home Buyer's Guide!');
   });
 
   test('should navigate to homes for sale page from Buy Virtual Home Buying dropdown', async ({ page }) => {
