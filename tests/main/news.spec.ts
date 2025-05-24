@@ -33,14 +33,14 @@ test.describe('Main Page News Section Tests', () => {
         await page.waitForTimeout(1000);
         await expect(newsContainer).toBeVisible();
         await newsContainer.scrollIntoViewIfNeeded();
-        await expect(imageLink).toHaveAttribute('href', 'https://news.remax.com/more-new-listings-are-hitting-the-market-especially-in-these-5-places');
+        await expect(imageLink).toHaveAttribute('href', 'https://news.remax.com/us-housing-inventory-up-35-from-last-year-according-to-new-data-from-remax');
         await imageLink.scrollIntoViewIfNeeded();
         await expect(imageLink).toBeVisible({ timeout: 30000 });
         await expect(image).toBeVisible();
-        await expect(image).toHaveAttribute('alt', 'More New Listings Are Hitting the Market – Especially in These 5 Places');
+        await expect(image).toHaveAttribute('alt', 'U.S. Housing Inventory Up 35% From Last Year, According to New Data From REMAX');
         await imageLink.click();
         const newPage = await pagePromise;
-        expect(newPage.url()).toBe('https://news.remax.com/more-new-listings-are-hitting-the-market-especially-in-these-5-places');
+        expect(newPage.url()).toBe('https://news.remax.com/us-housing-inventory-up-35-from-last-year-according-to-new-data-from-remax');
         await newPage.close();
     });
 
@@ -55,11 +55,11 @@ test.describe('Main Page News Section Tests', () => {
         await expect(marketTrendsTag).toBeVisible(); 
         await expect(readMoreLink).toBeVisible();
         await expect(readMoreLink).toHaveText('Read Post');
-        await expect(readMoreLink).toHaveAttribute('href', 'https://news.remax.com/more-new-listings-are-hitting-the-market-especially-in-these-5-places');
+        await expect(readMoreLink).toHaveAttribute('href', 'https://news.remax.com/us-housing-inventory-up-35-from-last-year-according-to-new-data-from-remax');
         const pagePromise = context.waitForEvent('page');
         await readMoreLink.click();
         const newPage = await pagePromise;
-        expect(newPage.url()).toBe('https://news.remax.com/more-new-listings-are-hitting-the-market-especially-in-these-5-places');
+        expect(newPage.url()).toBe('https://news.remax.com/us-housing-inventory-up-35-from-last-year-according-to-new-data-from-remax');
         await newPage.close();
     });
 }); 
