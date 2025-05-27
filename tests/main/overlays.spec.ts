@@ -79,4 +79,55 @@ test.describe('Main Page Overlays Tests', () => {
         await expect(luxuryPropertiesHeader).toBeVisible();
     });
 
+    test('Real Estate Listings By City is displayed and clickable', async ({ page, context }) => {
+        const cities = [
+            { name: 'Atlanta', state: 'GA' },
+            { name: 'Nashville', state: 'TN' },
+            { name: 'Phoenix', state: 'AZ' },
+            { name: 'San Francisco', state: 'CA' },
+            { name: 'Austin', state: 'TX' },
+            { name: 'New York', state: 'NY' },
+            { name: 'Raleigh', state: 'NC' },
+            { name: 'Seattle', state: 'WA' },
+            { name: 'Denver', state: 'CO' },
+            { name: 'Orlando', state: 'FL' },
+            { name: 'San Antonio', state: 'TX' },
+            { name: 'Tampa', state: 'FL' }
+        ];
+        const listingsByCityHeader = page.getByRole('heading', { name: 'Real Estate Listings By City' });
+        await expect(listingsByCityHeader).toBeVisible();
+
+        for (const city of cities) {
+            const houseForSaleCity = page.getByTestId('d-link').filter({ hasText: `Houses for sale in ${city.name}` });
+            const listingsByCitySubtitle = page.getByTestId('d-text').filter({ hasText: `${city.name}, ${city.state} Real Estate and Homes for Sale` });
+            
+            await expect(houseForSaleCity).toBeVisible();
+            await houseForSaleCity.click();
+            const cityUrlName = city.name.toLowerCase().replace(/\s+/g, '-');
+            await expect(page.url()).toContain(`homes-for-sale/${city.state.toLowerCase()}/${cityUrlName}/city`);
+            await expect(listingsByCitySubtitle).toBeVisible();
+            await page.goto(process.env.BASE_URL!);
+        }
+    });
+
+    test('Popular Searches Nearby is displayed and clickable', async ({ page, context }) => {
+        const popularSearchesOption = [
+            { name: 'New Listings', urlParam: 'newListing' },
+            { name: 'Virtual Tours', urlParam: 'hasVirtualTour' },
+            { name: 'Open Houses', urlParam: 'openHouse' },
+            { name: 'Homes For Sale', urlParam: 'PropertyType' },
+            { name: 'Price Reductions', urlParam: 'priceReduced' }
+        ];
+        const popularSearchesNearbyHeader = page.locator('h3.popular-links-header');
+        await expect(popularSearchesNearbyHeader).toBeVisible();
+
+        for (const option of popularSearchesOption) {
+            const popularSearchesOption = page.getByTestId('d-link').filter({ hasText: `${option.name} Near Me`});
+            
+            await expect(popularSearchesOption).toBeVisible();
+            await popularSearchesOption.click();
+            await expect(page.url()).toContain(option.urlParam);
+            await page.goto(process.env.BASE_URL!);
+        }
+    });
 });
